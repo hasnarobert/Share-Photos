@@ -1,0 +1,88 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="Site.master.cs" Inherits="SiteMaster" %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head runat="server">
+    <title></title>
+    <link href="~/Styles/Site.css" rel="stylesheet" type="text/css" />
+    <asp:ContentPlaceHolder ID="HeadContent" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+    <form runat="server" class="top-form">
+    <div class="top-bar">
+        <div class="site-title">Share Photos</div>
+        <div class="site-login">
+            <asp:LoginView runat="server">
+                <LoggedInTemplate>
+                    <span class="bold">
+                        <asp:LoginName ID="HeadLoginName" runat="server" />
+                    </span>
+                    [ <asp:LoginStatus ID="HeadLoginStatus" runat="server" LogoutAction="Redirect" LogoutText="Log Out" LogoutPageUrl="~/"/> ]
+                </LoggedInTemplate>
+                <AnonymousTemplate>
+                    <asp:Login ID="LoginUser" runat="server" EnableViewState="false" RenderOuterTable="false">
+                        <LayoutTemplate>
+                            <span class="failureNotification">
+                                <asp:Label ID="FailureText" runat="server"></asp:Label>
+                            </span>
+                            <asp:ValidationSummary ID="LoginUserValidationSummary" runat="server" CssClass="failureNotification" ValidationGroup="LoginUserValidationGroup"/>
+                            
+                            <asp:Label ID="UserNameLabel" runat="server" AssociatedControlID="UserName">Username:</asp:Label>
+                            <asp:TextBox ID="UserName" runat="server"></asp:TextBox>
+                            <asp:RequiredFieldValidator ID="UserNameRequired" runat="server" ControlToValidate="UserName" 
+                                    CssClass="failureNotification" ErrorMessage="User Name is required." ToolTip="User Name is required." 
+                                    ValidationGroup="LoginUserValidationGroup">*</asp:RequiredFieldValidator>
+                                    
+                            <asp:Label ID="PasswordLabel" runat="server" AssociatedControlID="Password">Password:</asp:Label>
+                            <asp:TextBox ID="Password" runat="server" TextMode="Password"></asp:TextBox>
+                            <asp:RequiredFieldValidator ID="PasswordRequired" runat="server" ControlToValidate="Password" 
+                                    CssClass="failureNotification" ErrorMessage="Password is required." ToolTip="Password is required." 
+                                    ValidationGroup="LoginUserValidationGroup">*</asp:RequiredFieldValidator>
+
+                            <asp:Button ID="LoginButton" runat="server" CommandName="Login" Text="Log In" ValidationGroup="LoginUserValidationGroup"/>
+                            
+                        </LayoutTemplate>
+                    </asp:Login>
+                    <a href="Account/Register.aspx">[register]</a>
+                </AnonymousTemplate>
+            </asp:LoginView>
+        </div>
+        <div class="clear"></div>
+    </div>
+    <div class="page">
+        <div class="navigation">
+            <asp:LoginView runat="server">
+                <AnonymousTemplate>
+                    <div class="menu">
+                        <ul class="menu">
+                            <li><a href="Default.aspx">Home</a></li>
+                            <li><a href="Category.aspx">Categories</a></li>
+                            <li><a href="Search.aspx">Search</a></li>
+                        </ul>
+                    </div>
+                </AnonymousTemplate>
+                <LoggedInTemplate>
+                    <div class="menu">
+                        <ul class="menu">
+                            <li><a href="Default.aspx">Home</a></li>
+                            <li><a href="Category.aspx">Categories</a></li>
+                            <li><a href="AlbumsPage.aspx">Albums</a></li>
+                            <li><a href="Search.aspx">Search</a></li>
+                        </ul>
+                    </div>
+                </LoggedInTemplate>
+            </asp:LoginView>
+            <asp:ContentPlaceHolder ID="NavigationContent" runat="server"/>
+        </div>
+
+        <div class="content-container">
+            <div class="content">
+                <asp:ContentPlaceHolder ID="MainContent" runat="server"/>
+            </div>
+        </div>
+        <div class="clear"></div>
+    </div>
+    </form>
+</body>
+</html>
